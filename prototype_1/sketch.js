@@ -14,6 +14,7 @@ let border_sound;
 function preload() {
   shoot_sound = loadSound('spaceshooter.mp3');
   border_sound = loadSound('spaceshooter_border.mp3');
+  destruct_sound = loadSound('destruction.mp3');
   
 }
 
@@ -23,7 +24,8 @@ function setup() {
     enemyPos = enemyPos - 125;
     let enemy = {
       x: random(0, 380),
-      y: enemyPos
+      y: enemyPos,
+      z: 0
     }
     enemies.push(enemy)
   }
@@ -63,7 +65,13 @@ function draw() {
   }
   for (let enemy of enemies) {
     fill("red")
-    enemy.y += difficulty
+    if (enemy.z == 0) {
+      enemy.y += difficulty;
+    } else if (enemy.z == 2) {
+      enemies.splice(enemies.indexOf(enemy), 1); 
+    } else {
+      fill("black");
+    }
     rect(enemy.x, enemy.y, 20)
     fill("white");
     if (enemy.y > 375) {
@@ -83,7 +91,11 @@ function draw() {
   for (let enemy of enemies) {
     for (let bullet of bullets) {
       if (dist(enemy.x, enemy.y, bullet.x, bullet.y) < 20) {
-        enemies.splice(enemies.indexOf(enemy), 1);
+        enemy.z = 1;
+        destruct_sound.play();
+        setTimeout(() => {
+            enemy.z = 2;
+        }, 1000);
         bullets.splice(bullets.indexOf(bullet), 1);
         score += 1
         if (score == 5) {
