@@ -24,16 +24,23 @@ function setup() {
 var x1 = 200;
 var x2 = 170;
 var x3 = 230;
-var speed = 5;
 
 // player bounces
 function draw() {
   background(51);
-  x1 += speed;
-  x2 += speed;
-  x3 += speed;
-  if (x1 < 0 || x1 > width) {
-    speed *= -1;
+if (keyIsDown(LEFT_ARROW)) {
+    if (x1 > 0) {
+      x1 -= 5;
+      x2 -= 5;
+      x3 -= 5;
+    } // else play sound
+  }
+  else if (keyIsDown(RIGHT_ARROW)) {
+    if (x1 < width) {
+      x1 += 5;
+      x2 += 5;
+      x3 += 5;
+    } // else play sound
   }
   triangle(x1, 370, x2, 400, x3, 400)
   for (let bullet of bullets){
