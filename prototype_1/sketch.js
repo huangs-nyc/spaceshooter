@@ -40,9 +40,9 @@ function draw() {
   background(51)
   if (keyIsDown(LEFT_ARROW)) {
     if (x1 > 0) {
-      x1 -= 5;
-      x2 -= 5;
-      x3 -= 5;
+      x1 -= 3;
+      x2 -= 3;
+      x3 -= 3;
   } // else play sound
     else if (x1 <= 0) {
       border_sound.play();
@@ -50,9 +50,9 @@ function draw() {
   }
   else if (keyIsDown(RIGHT_ARROW)) {
     if (x1 < width) {
-      x1 += 5;
-      x2 += 5;
-      x3 += 5;
+      x1 += 3;
+      x2 += 3;
+      x3 += 3;
     } // else play sound
     else if (x1 >= width) {
       border_sound.play();
@@ -99,19 +99,19 @@ function draw() {
         bullets.splice(bullets.indexOf(bullet), 1);
         score += 1
         if (score == 5) {
-          difficulty = 1;
+          difficulty = 1.5;
           difficultyLevel = 2;
         }
         if (score == 15) {
-          difficulty = 1.5;
+          difficulty = 2.5;
           difficultyLevel = 3;
         }
         if (score == 25) {
-          difficulty = 2;
+          difficulty = 3;
           difficultyLevel = 4;
         }
         if (score >= 35) {
-          difficulty = 2.5;
+          difficulty = 3.5;
           difficultyLevel = 5;
         }
       }
