@@ -8,6 +8,14 @@ var firstBullet = 0;
 let difficulty = 0.5;
 let difficultyLevel = 1;
 let endGame = 0;
+let shoot_sound;
+let border_sound;
+
+function preload() {
+  shoot_sound = loadSound('spaceshooter.mp3');
+  border_sound = loadSound('spaceshooter_border.mp3');
+  
+}
 
 function setup() {
   createCanvas(400, 400);
@@ -27,13 +35,16 @@ var x3 = 230;
 
 // player bounces
 function draw() {
-  background(51);
-if (keyIsDown(LEFT_ARROW)) {
+  background(51)
+  if (keyIsDown(LEFT_ARROW)) {
     if (x1 > 0) {
       x1 -= 5;
       x2 -= 5;
       x3 -= 5;
-    } // else play sound
+  } // else play sound
+    else if (x1 <= 0) {
+      border_sound.play();
+    }
   }
   else if (keyIsDown(RIGHT_ARROW)) {
     if (x1 < width) {
@@ -41,6 +52,9 @@ if (keyIsDown(LEFT_ARROW)) {
       x2 += 5;
       x3 += 5;
     } // else play sound
+    else if (x1 >= width) {
+      border_sound.play();
+    }
   }
   triangle(x1, 370, x2, 400, x3, 400)
   for (let bullet of bullets){
@@ -105,14 +119,18 @@ function keyPressed(){
   if (keyCode == 32) {
     if (endGame == 0) {
       if (firstBullet == 0) {
+        shoot_sound.stop();
+        shoot_sound.play();
         firstBullet = 1;
         bullets.push(bullet);
         time = millis();
       }
       if (firstBullet == 1) {
-        if (millis() - time >= 300) {
+        if (millis() - time >= 400) {
+          shoot_sound.stop();
+          shoot_sound.play();
           bullets.push(bullet);
-          time = millis()
+          time = millis();
         }
       }
     }
